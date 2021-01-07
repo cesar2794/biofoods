@@ -1,4 +1,6 @@
 <?php
+use App\Product;
+use App\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +14,29 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    /*
+    $prod = new Product();
+
+    $prod->nombre = 'Harina de Trigo 250g';
+    $prod->slug = 'harina-de-trigo-250g';
+    $prod->category_id = 2;
+    $prod->unidades = 'UNIDAD';
+    $prod->descripcion_larga = 'Producto 3 con descripcion larga';
+    $prod->estado = 'Nuevo';
+    $prod->activo = 'Si';
+    $prod->slider_principal = 'No';
+    $prod->save();
+
+    return $prod;
+    */
+
+    // return view('welcome');
+
+    // $cat = Category::find(1)->products;
+    // return $cat;
+
+    return view('tienda.index');
 });
 
 Auth::routes();
