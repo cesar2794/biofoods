@@ -15,15 +15,15 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->string('slug');
+            $table->string('nombre')->unique();
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('category_id');
-            $table->string('unidades');
+            $table->string('unidad_medida');
             $table->bigInteger('cantidad')->unsigned()->default(0);
             $table->decimal('precio_actual',12,2)->default(0);
             $table->decimal('precio_anterior',12,2)->default(0);
             $table->integer('porcentaje_descuento')->unsigned()->default(0);
-            $table->text('descripcion_larga');
+            $table->text('descripcion_larga')->nullable();
             $table->unsignedBigInteger('visitas')->default(0);
             $table->unsignedBigInteger('ventas')->default(0);
             $table->string('estado');
@@ -45,3 +45,5 @@ class CreateProductsTable extends Migration
         Schema::dropIfExists('products');
     }
 }
+
+

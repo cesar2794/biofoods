@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoría</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
+        integrity="sha512-a6BdqcSPJ7cKHeWy1Cfbe/hGJeaZEVmPMtyqpII9WFO39OqGhGe+PS0WgtHJxd7a4u0rLV9TPYSkNLtOl8b2gA=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="app">
+            <form action="">
+                <h1 class="my-4 text-center">Crear Categoría</h1>
+                <div class="form-group">
+                    <label class="pt-3" for="nombre">Nombre</label>
+                    <input v-model="nombre" @blur="getCategory" @focus="div_aparecer=true" id="nombre"
+                        class="form-control" type="text" name="nombre">
+
+                    <label class="pt-3" for="slug">Slug</label>
+                    <input readonly v-model="generarSlug" id="slug" class="form-control" type="text" name="slug">
+                    <div v-if="div_aparecer" v-bind:class="div_clase_slug">
+                        {{ div_mensaje_slug }}
+                    </div>
+
+                    <br v-if="div_aparecer">
+                    <label class="pt-3" for="descripcion">Descripción</label>
+                    <textarea id="descripcion" class="form-control" name="descripcion" rows="5" cols="30"></textarea>
+                </div>
+
+                <input :disabled="deshabilitar_boton==1" type="submit" value="Guardar"
+                    class="btn btn-primary float-right mb-4">
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                nombre: 'César Rosas',
+                slug: '',
+                div_mensaje_slug: 'Este Slug ya existe',
+                div_clase_slug: 'badge badge-danger',
+                div_aparecer: false,
+                deshabilitar_boton: 0
+            },
+            computed: {
+                generarSlug: function () {
+                    var char = {
+                        "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u",
+                        "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U",
+                        "ñ": "n", "Ñ": "N", " ": "-", "_": "-", "@": "-"
+                    }
+                    var expr = /[áéíóúÁÉÍÓÚÑñ_@ ]/g;
+
+                    this.slug = this.nombre.trim().replace(expr, function (e) {
+                        return char[e]
+                    }).toLowerCase()
+
+                    // return this.nombre.trim().replace(/ /g, '-').toLowerCase()
+
+                    return this.slug;
+                }
+            },
+            methods: {
+                getCategory() {
+                    let url = 'api/category/' + this.slug;
+                    axios.get(url).then(response => {
+                        this.div_mensaje_slug = response.data;
+                        if (this.div_mensaje_slug === 'Slug disponible') {
+                            this.div_clase_slug = 'badge badge-success';
+                            this.deshabilitar_boton = 0;
+                        } else {
+                            this.div_clase_slug = 'badge badge-danger';
+                            this.deshabilitar_boton = 1;
+                        }
+
+                        this.div_aparecer = true;
+                    })
+                }
+            }
+        });
+
+    </script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
