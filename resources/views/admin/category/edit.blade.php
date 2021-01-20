@@ -1,12 +1,16 @@
 @extends('plantilla.admin')
 
-@section('titulo', 'Crear Categoría')
+@section('titulo', 'Editar Categoría')
 
 @section('contenido')
 
 <div id="apicategory">
-    <form action="{{ route('admin.category.store') }}" method="POST">
+    <form action="{{route('admin.category.update',$cat->id)}}" method="POST">
         @csrf
+        @method('PUT')
+
+        <span style="display: none;" id="editar">{{ $editar }}</span>
+        <span style="display: none;" id="nombretemp">{{ $cat->nombre }}</span>
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Gestión</h3>
@@ -30,7 +34,7 @@
 
                         <br v-if="div_aparecer">
                         <label class="pt-3" for="descripcion">Descripción</label>
-                        <textarea id="descripcion" class="form-control" name="descripcion" rows="5" cols="30"></textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" rows="5" cols="30">{{$cat->descripcion}}</textarea>
                     </div>
 
             </div> <!-- /.card-body -->

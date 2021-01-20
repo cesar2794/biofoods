@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
 
-class CategoryController extends Controller
+class AdminCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,17 +15,17 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        /*
-        $cat = new Category();
-        $cat->nombre = 'Light';
-        $cat->slug = 'light';
-        $cat->descripcion = 'Todo tipo de Productos Light';
-        $cat->save();
+        //
+    }
 
-        return $cat;
-        */
-
-        return Category::all();
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin.category.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Category::create($request->all());
     }
 
     /**
@@ -45,13 +45,23 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        if (Category::where('slug',$slug)->first()) {
-            return 'El Slug ya existe';
-        }else{
-            return 'Slug disponible';
-        }
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug)
+    {
+        $cat = Category::where('slug', $slug)->firstOrFail();
+        $editar = 'Si';
+
+        return view('admin.category.edit', compact('cat', 'editar'));
     }
 
     /**
@@ -63,7 +73,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cat = Category::findOrFail($id);
+        $cat->fill($request->all())->save();
+
+        return $cat;
     }
 
     /**
