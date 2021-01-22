@@ -5,6 +5,10 @@
 @section('contenido')
 
 <div class="row">
+
+    <span>{{ route('admin.category.index') }}</span>
+
+    @include('custom.modal_eliminar')
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -50,7 +54,7 @@
 
                                 <td><a class="btn btn-outline-info" href="{{ route('admin.category.edit', $categoria->slug) }}" data-toggle="tooltip" title="Editar Categoría"><i class="fas fa-edit"></i></a></td>
 
-                                <td><a class="btn btn-danger" href="{{ route('admin.category.index') }}" data-toggle="tooltip" title="Eliminar Categoría"><i class="fas fa-trash-alt"></i></a></td>
+                                <td><a class="btn btn-danger" href="{{ route('admin.category.index') }}"><i class="fas fa-trash-alt"></i></a></td>
                             </tr>
                         @endforeach
                     </tbody>
