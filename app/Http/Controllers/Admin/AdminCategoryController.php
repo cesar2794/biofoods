@@ -15,7 +15,8 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Category::orderBy('nombre')->paginate(2);
+        return view('admin.category.index', compact('categorias'));
     }
 
     /**
@@ -36,7 +37,11 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return Category::create($request->all());
+        // return Category::create($request->all());
+
+        Category::create($request->all());
+
+        return redirect()->route('admin.category.index')->with('datos','Categoría creada correctamente!');
     }
 
     /**
@@ -45,9 +50,12 @@ class AdminCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $cat = Category::where('slug', $slug)->firstOrFail();
+        $editar = 'Si';
+
+        return view('admin.category.show', compact('cat', 'editar'));
     }
 
     /**
@@ -76,7 +84,8 @@ class AdminCategoryController extends Controller
         $cat = Category::findOrFail($id);
         $cat->fill($request->all())->save();
 
-        return $cat;
+        // return $cat;
+        return redirect()->route('admin.category.index')->with('datos','Categoría actualizada correctamente!');
     }
 
     /**

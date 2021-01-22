@@ -1,0 +1,66 @@
+@extends('plantilla.admin')
+
+@section('titulo', 'Administración de Categorías')
+
+@section('contenido')
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><em>Tabla | Categorías</em></h3>
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+
+                <a class="btn btn-warning m-3 float-right" href="{{ route('admin.category.create') }}" data-toggle="tooltip" title="Crear nueva Categoría">Agregar <i class="fas fa-plus-circle"></i></a>
+
+                <table class="table table-head-fixed">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Slug</th>
+                            <th>Descripción</th>
+                            <th>Fecha creación</th>
+                            <th>Fecha modificación</th>
+                            <th class="text-center" colspan="3">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categorias as $categoria)
+                            <tr>
+                                <td>{{$categoria->id}}</td>
+                                <td>{{$categoria->nombre}}</td>
+                                <td>{{$categoria->slug}}</td>
+                                <td>{{$categoria->descripcion}}</td>
+                                <td>{{$categoria->created_at}}</td>
+                                <td>{{$categoria->updated_at}}</td>
+
+                                <td><a class="btn btn-outline-success" href="{{ route('admin.category.show', $categoria->slug) }}" data-toggle="tooltip" title="Ver Categoría"><i class="fas fa-eye"></i></a></td>
+
+                                <td><a class="btn btn-outline-info" href="{{ route('admin.category.edit', $categoria->slug) }}" data-toggle="tooltip" title="Editar Categoría"><i class="fas fa-edit"></i></a></td>
+
+                                <td><a class="btn btn-danger" href="{{ route('admin.category.index') }}" data-toggle="tooltip" title="Eliminar Categoría"><i class="fas fa-trash-alt"></i></a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center my-2">
+                    {{ $categorias->links() }}
+                </div>
+            </div> <!-- /.card-body -->
+        </div> <!-- /.card -->
+    </div>
+</div> <!-- /.row -->
+
+@endsection
