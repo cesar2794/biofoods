@@ -6,6 +6,8 @@
   <title>@yield('titulo')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{-- Agregado por error de csrf#csrf-x-csrf-token --}}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="http://127.0.0.1:8000/adminlte/plugins/fontawesome-free/css/all.min.css">
@@ -199,6 +201,34 @@
               </li>
             </ul>
           </li>
+
+          <!-- CATEGORÍAS -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
+              <i class="nav-icon fas fa-sitemap"></i>
+              <p>
+                Categorías
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.category.index')}}" class="nav-link">
+                  <i class="far fa-list-alt nav-icon"></i>
+                  <p>Listado de Categorías</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.category.create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle nav-icon"></i>
+                  <p>Crear Categoría</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
           <li class="nav-item">
             <a href="../widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -706,8 +736,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">@yield('titulo')</li>
+              <li class="breadcrumb-item"><a href="{{route('admin')}}">Inicio</a></li>
+              @yield('breadcrumb')
             </ol>
           </div>
         </div>
@@ -729,6 +759,15 @@
         @if (session('cancelar'))
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 {{ session('cancelar') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-toggle="tooltip" title="Cerrar Mensaje">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session('eliminar'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('eliminar') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-toggle="tooltip" title="Cerrar Mensaje">
                     <span aria-hidden="true">&times;</span>
                 </button>

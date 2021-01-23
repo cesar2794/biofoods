@@ -2,11 +2,15 @@
 
 @section('titulo', 'Administración de Categorías')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item active">@yield('titulo')</li>
+@endsection
+
 @section('contenido')
 
-<div class="row">
+<div id="confirmareliminar" class="row">
 
-    <span>{{ route('admin.category.index') }}</span>
+    <span style="display: none;" id="urlbase">{{ route('admin.category.index') }}</span>
 
     @include('custom.modal_eliminar')
     <div class="col-12">
@@ -14,13 +18,17 @@
             <div class="card-header">
                 <h3 class="card-title"><em>Tabla | Categorías</em></h3>
                 <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    <form>
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="nombre" class="form-control float-right" placeholder="Buscar" value="{{request()->get('nombre')}}">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
             <!-- /.card-header -->
@@ -54,13 +62,13 @@
 
                                 <td><a class="btn btn-outline-info" href="{{ route('admin.category.edit', $categoria->slug) }}" data-toggle="tooltip" title="Editar Categoría"><i class="fas fa-edit"></i></a></td>
 
-                                <td><a class="btn btn-danger" href="{{ route('admin.category.index') }}"><i class="fas fa-trash-alt"></i></a></td>
+                                <td><a class="btn btn-danger" href="{{ route('admin.category.index') }}" v-on:click.prevent="deseas_eliminar({{$categoria->id}})"><i class="fas fa-trash-alt"></i></a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center my-2">
-                    {{ $categorias->links() }}
+                    {{ $categorias->appends($_GET)->links() }}
                 </div>
             </div> <!-- /.card-body -->
         </div> <!-- /.card -->

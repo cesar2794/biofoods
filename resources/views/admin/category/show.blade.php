@@ -1,6 +1,11 @@
 @extends('plantilla.admin')
 
-@section('titulo', 'Vista de Categoría: '.$cat->nombre)
+@section('titulo', 'Categoría: '.$cat->nombre)
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{route('admin.category.index')}}">Categorías</a></li>
+    <li class="breadcrumb-item active">Ver Categoría</li>
+@endsection
 
 @section('contenido')
 
