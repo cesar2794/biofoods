@@ -774,6 +774,16 @@
             </div>
         @endif
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @yield('contenido')
 
     </section>
@@ -806,6 +816,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="http://127.0.0.1:8000/adminlte/dist/js/demo.js"></script>
 
-<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/app_admin.js') }}" defer></script>
 </body>
 </html>
