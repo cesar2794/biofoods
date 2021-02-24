@@ -18,11 +18,11 @@ Route::get('/', function () {
     /*
     $prod = new Product();
 
-    $prod->nombre = 'Harina de Trigo 250g';
-    $prod->slug = 'harina-de-trigo-250g';
-    $prod->category_id = 2;
-    $prod->unidades = 'UNIDAD';
-    $prod->descripcion_larga = 'Producto 3 con descripcion larga';
+    $prod->nombre = 'Panetón DVieri';
+    $prod->slug = 'paneton-dvieri';
+    $prod->category_id = 1;
+    $prod->unidad_medida = 'Caja de 6 unidades';
+    $prod->descripcion_larga = 'Producto de prueba con una descripcion larga, solo para hacer pruebas.';
     $prod->estado = 'Nuevo';
     $prod->activo = 'Si';
     $prod->slider_principal = 'No';
@@ -48,6 +48,8 @@ Route::get('/admin', function () {
 })->name('admin');
 
 Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category');
+
+Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product');
 
 Route::get('cancelar/{ruta}', function($ruta){
     return redirect()->route($ruta)->with('cancelar','Acción Cancelada!');
