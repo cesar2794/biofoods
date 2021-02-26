@@ -18,7 +18,7 @@ class AdminProductController extends Controller
     {
         $nombre = $request->get('nombre');
 
-        $productos = Product::where('nombre','like',"%$nombre%")->orderBy('nombre')->paginate(2);
+        $productos = Product::where('nombre','like',"%$nombre%")->orderBy('nombre')->paginate(5);
         return view('admin.product.index', compact('productos'));
     }
 
@@ -41,7 +41,34 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prod = new Product;
+
+        $prod->nombre = $request->nombre;
+        $prod->slug = $request->slug;
+        $prod->category_id = $request->category_id;
+        $prod->cantidad = $request->cantidad;
+        $prod->precio_anterior = $request->precioanterior;
+        $prod->precio_actual = $request->precioactual;
+        $prod->porcentaje_descuento = $request->porcentajededescuento;
+        $prod->descripcion_larga = $request->descripcion_larga;
+        $prod->unidad_medida = $request->unidad_medida;
+        $prod->estado = $request->estado;
+
+        if ($request->activo) {
+            $prod->activo = 'Si';
+        }else{
+            $prod->activo = 'No';
+        }
+
+        if ($request->sliderprincipal) {
+            $prod->slider_principal = 'Si';
+        }else{
+            $prod->slider_principal = 'No';
+        }
+
+        $prod->save();
+
+        return $prod;
     }
 
     /**

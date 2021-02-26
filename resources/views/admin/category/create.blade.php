@@ -24,11 +24,11 @@
             <div class="card-body">
                     <div class="form-group">
                         <label class="pt-3" for="nombre">Nombre</label>
-                        <input v-model="nombre" @blur="getCategory" @focus="div_aparecer=true" id="nombre"
+                        <input v-model="nombre" @blur="getCategory" @focus="div_aparecer=false" id="nombre"
                             class="form-control" type="text" name="nombre">
 
                         <label class="pt-3" for="slug">Slug</label>
-                        <input readonly v-model="generarSlug" id="slug" class="form-control" type="text" name="slug">
+                        <input readonly v-model="generarSlugC" id="slug" class="form-control" type="text" name="slug">
                         <div v-if="div_aparecer" v-bind:class="div_clase_slug">
                             @{{ div_mensaje_slug }}
                         </div>

@@ -1,5 +1,5 @@
-const apicategory = new Vue({
-    el: '#apicategory',
+const apiproduct = new Vue({
+    el: '#apiproduct',
     data: {
         nombre: '',
         slug: '',
@@ -9,7 +9,7 @@ const apicategory = new Vue({
         deshabilitar_boton: 1
     },
     computed: {
-        generarSlugP: function () {
+        generarSlug: function () {
             var char = {
                 "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u",
                 "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U",
@@ -27,10 +27,10 @@ const apicategory = new Vue({
         }
     },
     methods: {
-        getCategory() {
+        getProduct() {
 
             if(this.slug){
-                let url = '/api/category/' + this.slug;
+                let url = '/api/product/' + this.slug;
                 axios.get(url).then(response => {
                     this.div_mensaje_slug = response.data;
                     if (this.div_mensaje_slug === "Slug disponible") {
@@ -45,7 +45,7 @@ const apicategory = new Vue({
                 })
             }else{
                 this.div_clase_slug = 'badge badge-warning';
-                this.div_mensaje_slug = "Debes escribir una categoría";
+                this.div_mensaje_slug = "Debes escribir un producto";
                 this.deshabilitar_boton = 1;
                 this.div_aparecer = true;
             }

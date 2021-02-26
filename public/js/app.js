@@ -49734,7 +49734,7 @@ var apicategory = new Vue({
     deshabilitar_boton: 1
   },
   computed: {
-    generarSlug: function generarSlug() {
+    generarSlugP: function generarSlugP() {
       var _char = {
         "á": "a",
         "é": "e",
@@ -49782,6 +49782,87 @@ var apicategory = new Vue({
       } else {
         this.div_clase_slug = 'badge badge-warning';
         this.div_mensaje_slug = "Debes escribir una categoría";
+        this.deshabilitar_boton = 1;
+        this.div_aparecer = true;
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (document.getElementById('editar')) {
+      this.nombre = document.getElementById('nombretemp').innerHTML;
+      this.deshabilitar_boton = 0;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/apiproduct.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/apiproduct.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var apiproduct = new Vue({
+  el: '#apiproduct',
+  data: {
+    nombre: '',
+    slug: '',
+    div_mensaje_slug: 'El Slug ya existe',
+    div_clase_slug: 'badge badge-danger',
+    div_aparecer: false,
+    deshabilitar_boton: 1
+  },
+  computed: {
+    generarSlug: function generarSlug() {
+      var _char = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "ñ": "n",
+        "Ñ": "N",
+        " ": "-",
+        "_": "-",
+        "@": "-"
+      };
+      var expr = /[áéíóúÁÉÍÓÚÑñ_@ ]/g;
+      this.slug = this.nombre.trim().replace(expr, function (e) {
+        return _char[e];
+      }).toLowerCase(); // return this.nombre.trim().replace(/ /g, '-').toLowerCase()
+
+      return this.slug;
+    }
+  },
+  methods: {
+    getProduct: function getProduct() {
+      var _this = this;
+
+      if (this.slug) {
+        var url = '/api/product/' + this.slug;
+        axios.get(url).then(function (response) {
+          _this.div_mensaje_slug = response.data;
+
+          if (_this.div_mensaje_slug === "Slug disponible") {
+            _this.div_clase_slug = 'badge badge-success';
+            _this.deshabilitar_boton = 0;
+          } else {
+            _this.div_clase_slug = 'badge badge-danger';
+            _this.deshabilitar_boton = 1;
+          }
+
+          _this.div_aparecer = true;
+        });
+      } else {
+        this.div_clase_slug = 'badge badge-warning';
+        this.div_mensaje_slug = "Debes escribir un producto";
         this.deshabilitar_boton = 1;
         this.div_aparecer = true;
       }
@@ -49902,6 +49983,10 @@ if (document.getElementById('app')) {
 
 if (document.getElementById('apicategory')) {
   __webpack_require__(/*! ./admin/apicategory */ "./resources/js/admin/apicategory.js");
+}
+
+if (document.getElementById('apiproduct')) {
+  __webpack_require__(/*! ./admin/apiproduct */ "./resources/js/admin/apiproduct.js");
 }
 
 if (document.getElementById('confirmareliminar')) {
